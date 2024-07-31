@@ -9,3 +9,22 @@ html {
   margin: 0;
   padding: 0;
 }
+
+.container {
+  display: flex;
+  width: 320px;
+  height: 320px;
+  flex-wrap: wrap;
+  margin: 24px;
+  box-sizing: content-box;
+  border: 8px solid #ccc;
+  border-radius: 8px;
+}
+
+.defaultColor {
+  background-color: #eee;
+}
+
+.currColor {
+  background-color: #333;
+}
