@@ -10,19 +10,25 @@ html {
   padding: 0;
 }
 
-.container {
+body {
+  background-color: #ddd;
+}
+
+#grid {
   display: flex;
-  width: 320px;
-  height: 320px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  width: 360px;
+  height: 360px;
   margin: 24px;
-  box-sizing: content-box;
-  border: 8px solid #ccc;
-  border-radius: 8px;
+}
+
+.row {
+  display: flex;
+  background-color: #fff;
 }
 
 .defaultColor {
-  background-color: #eee;
+  background-color: #fff;
 }
 
 .currColor {

@@ -1,20 +1,46 @@
-const grid = document.querySelector("#grid");
+let canvasSize = 360;
+let defaultPixelSize = 16;
 
-let gridSize = 16;
-const canvasSize = 320;
+const body = document.querySelector("body");
+const defaultGrid = document.querySelector("#grid-size");
+const gridResize = document.querySelector("#grid-size");
+const gridSizeLable = document.querySelector("#grid-change");
+const cells = document.querySelector("#grid");
 
-for (let i = 0; i < gridSize ** 2; i++) {
-  const pixel = document.createElement("div");
-  pixel.classList.add("defaultColor");
-  pixel.classList.add("pixel");
-  pixel.style.width = canvasSize / gridSize + "px";
-  pixel.style.height = canvasSize / gridSize + "px";
-  grid.appendChild(pixel);
+function setupCanvas(rowNum) {
+  const container = document.createElement("div");
+  container.classList.add("container");
+  grid.appendChild(container);
+  for (let i = 0; i < rowNum; i++) {
+    const row = document.createElement("div");
+    container.appendChild(row);
+    row.classList.add("row");
+    for (let j = 0; j < rowNum; j++) {
+      const pixel = document.createElement("div");
+      pixel.classList.add("defaultColor");
+      pixel.style.width = canvasSize / rowNum + "px";
+      pixel.style.height = canvasSize / rowNum + "px";
+      row.appendChild(pixel);
+    }
+  }
 }
 
-const pixel = document.querySelector(".pixel");
+window.addEventListener("load", () => {
+  gridResize.value = defaultPixelSize;
+  let rowNum = gridResize.value;
+  setupCanvas(rowNum);
+})
 
-grid.addEventListener("mouseover", e => {
+cells.addEventListener("mouseover", (e) => {
   e.target.classList.add("currColor");
-  console.log(e.target);
+})
+
+gridResize.addEventListener("change", (e) => {
+  console.log(e);
+  const oldCanvas = document.querySelector(".container");
+  grid.removeChild(oldCanvas);
+  rowNum = e.target.value;
+  console.log(rowNum);
+  gridSizeLable.textContent = `Grid: ${rowNum} x ${rowNum}`;
+  setupCanvas(rowNum);
 })
