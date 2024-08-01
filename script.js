@@ -12,8 +12,6 @@ const green = "#74cf70";
 const blue = "#1865fa";
 let currentColor = "#21242c";
 
-let r, g, b;
-
 function random(max) {
   return Math.floor(Math.random() * max);
 }
@@ -22,10 +20,7 @@ function drawRainbow() {
   const pixels = document.querySelectorAll(".pixel");
   pixels.forEach((pixel) => {
     pixel.addEventListener("mouseover", (e) => {
-      let randomRed = random(256);
-      let randomGreen = random(256);
-      let randomBlue = random(256);
-      currentColor = `rgb(${randomRed}, ${randomGreen}, ${randomBlue})`;
+      currentColor = `rgb(${random(256)}, ${random(256)}, ${random(256)})`;
       e.target.style.backgroundColor = currentColor;
     })
   })
