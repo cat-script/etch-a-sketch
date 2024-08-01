@@ -8,6 +8,7 @@
     <script src="./script.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet">
@@ -15,16 +16,17 @@
   </head>
 
   <body>
-    <div>
-      <div id="grid-change">Grid: 16 x 16
-      </div>
-      <input type="range" id="grid-size" min="2" max="100">
+    <h1>Etch-a-Sketch</h1>
+    <div id="controls">
+      <input type="color" id="color-picker" name="color-picker" value="#21242c">
+      <button id="white"></button>
+      <button id="rainbow"></button>
+      <button id="shade"></button>
+      <button id="clear"></button>
     </div>
-
-    <div id="grid">
-
-    </div>
-
+    <div id="grid"></div>
+    <input type="range" id="size-input" min="2" max="100" value="16" step="1">
+    <output id="size-value">Grid: 16 x 16</output>
   </body>
 
 </html>
