@@ -1,13 +1,19 @@
-let canvasSize = 360;
-// let currentColor = "#21242c";
+let canvasSize = 500;
 
 const colorPicker = document.querySelector("#color-picker");
 const eraseBtn = document.querySelector("#white");
 const rainbowBtn = document.querySelector("#rainbow");
 const grayscaleBtn = document.querySelector("#grayscale");
 const clearBtn = document.querySelector("#clear");
-const themeBtn = document.querySelector("#content");
 const grid = document.querySelector("#grid");
+const slider = document.querySelector(".slider");
+
+const sizeControl = document.querySelector("#size-input");
+slider.style.width = canvasSize + "px";
+sizeControl.style.width = (canvasSize - 140) + "px";
+
+grid.style.width = canvasSize + "px";
+grid.style.height = canvasSize + "px";
 
 function drawRainbow() {
   const pixels = document.querySelectorAll(".pixel");
@@ -29,7 +35,7 @@ function setupCanvas(rowNum) {
     row.classList.add("row");
     for (let j = 0; j < rowNum; j++) {
       const pixel = document.createElement("div");
-      pixel.classList.add("pixel");
+      pixel.classList.add("pixel", "pixel-grid");
       pixel.style.backgroundColor = "#fff";
       pixel.style.width = canvasSize / rowNum + "px";
       pixel.style.height = canvasSize / rowNum + "px";
@@ -138,18 +144,20 @@ function drawGrayscale() {
   })
 }
 
-let isDarkTheme = true;
-
 const toggleTheme = document.querySelector("#theme");
 toggleTheme.onclick = () => {
   setTheme();
 }
 
+const toggleGrid = document.querySelector("#toggle-grid");
+toggleGrid.onclick = () => {
+  const pixels = document.querySelectorAll(".pixel");
+  pixels.forEach((pixel) => {
+    pixel.classList.toggle("pixel-grid");
+  })
+}
+
 function setTheme() {
-  if (isDarkTheme) {
-    themeBtn.classList.toggle("dark");
-    isDarkTheme = false;
-  } else if (isDarkTheme === false) {
-    themeBtn.classList.toggle("dark");
-  }
+  const themeSwitch = document.body;
+  themeSwitch.classList.toggle("dark");
 }
