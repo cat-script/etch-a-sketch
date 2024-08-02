@@ -16,17 +16,22 @@
   </head>
 
   <body>
-    <h1>Etch-a-Sketch</h1>
-    <div id="controls">
-      <input type="color" id="color-picker" name="color-picker" value="#21242c">
-      <button id="white"></button>
-      <button id="rainbow"></button>
-      <button id="shade"></button>
-      <button id="clear"></button>
+    <div id="content" class="dark light">
+      <h1>Etch-a-Sketch</h1>
+      <div class="color-buttons">
+        <input type="color" id="color-picker" name="color-picker" value="#21242c">
+        <button id="white"></button>
+        <button id="rainbow"></button>
+        <button id="grayscale"></button>
+        <button id="clear">❌</button>
+        <button id="theme">💡</button>
+      </div>
+      <div id="grid"></div>
+      <div class="slider">
+        <output id="size-value"></output>
+        <input type="range" id="size-input" min="2" max="100" value="16">
+      </div>
     </div>
-    <div id="grid"></div>
-    <input type="range" id="size-input" min="2" max="100" value="16" step="1">
-    <output id="size-value">Grid: 16 x 16</output>
   </body>
 
 </html>

@@ -1,20 +1,13 @@
 let canvasSize = 360;
-let rowNum;
+// let currentColor = "#21242c";
 
-const body = document.querySelector("body");
-const defaultGrid = document.querySelector("#grid-size");
-const gridResize = document.querySelector("#grid-size");
-const gridSizeLable = document.querySelector("#grid-change");
-const cells = document.querySelector("#grid");
-const white = "#fff";
-const red = "#e84d39";
-const green = "#74cf70";
-const blue = "#1865fa";
-let currentColor = "#21242c";
-
-function random(max) {
-  return Math.floor(Math.random() * max);
-}
+const colorPicker = document.querySelector("#color-picker");
+const eraseBtn = document.querySelector("#white");
+const rainbowBtn = document.querySelector("#rainbow");
+const grayscaleBtn = document.querySelector("#grayscale");
+const clearBtn = document.querySelector("#clear");
+const themeBtn = document.querySelector("#content");
+const grid = document.querySelector("#grid");
 
 function drawRainbow() {
   const pixels = document.querySelectorAll(".pixel");
@@ -25,39 +18,6 @@ function drawRainbow() {
     })
   })
 }
-
-const rainbowBtn = document.querySelector("#rainbow");
-rainbowBtn.addEventListener("click", () => {
-  drawRainbow();
-});
-
-const drawColor = () => {
-  const gridContent = document.querySelector(".container");
-  gridContent.addEventListener("mouseover", (e) => {
-    e.target.style.backgroundColor = currentColor;
-  })
-}
-
-const clear = document.querySelector("#clear");
-clear.addEventListener("click", () => {
-  const pixels = document.querySelectorAll(".pixel");
-  pixels.forEach((pixel) => {
-    pixel.style.backgroundColor = "#fff";
-  });
-})
-
-const shade = document.querySelector("#shade");
-shade.addEventListener("click", () => {
-  const shaded = document.querySelectorAll(".pixel");
-  shaded.forEach((pixel) => {
-    let opacity = 0.1;
-    pixel.addEventListener("mouseover", (e) => {
-      e.target.style.opacity = opacity;
-      e.target.style.backgroundColor = currentColor;
-      opacity += 0.1;
-    })
-  })
-})
 
 function setupCanvas(rowNum) {
   const container = document.createElement("div");
@@ -78,66 +38,118 @@ function setupCanvas(rowNum) {
   }
 }
 
-window.addEventListener("load", () => {
-  rowNum = 16;
-  setupCanvas(rowNum);
-  drawColor();
-})
-
-const value = document.querySelector("#size-value");
 const input = document.querySelector("#size-input");
-input.addEventListener("input", (e) => {
+const value = document.querySelector("#size-value");
+
+window.addEventListener("load", () => {
+  setTheme();
+  setupCanvas(input.value);
+  value.textContent = `${input.value} x ${input.value}`
+  resizeCanvas();
+  drawPixel(colorPicker.value);
+})
+
+function clearCanvas() {
   const oldCanvas = document.querySelector(".container");
-  cells.removeChild(oldCanvas);
-  rowNum = e.target.value;
-  setupCanvas(rowNum);
-  value.textContent = `Grid: ${e.target.value} x ${e.target.value}`;
-  coloring();
-})
-
-const colorPicker = document.querySelector("#color-picker");
-colorPicker.addEventListener("change", () => {
-  coloring();
-})
-
-function coloring() {
-  const pixels = document.querySelectorAll(".pixel");
-  pixels.forEach((pixel) => {
-    pixel.addEventListener("mouseover", (e) => {
-      currentColor = colorPicker.value;
-      e.target.style.opacity = 1;
-      pixel.style.backgroundColor = currentColor;
-    })
-  });
+  grid.removeChild(oldCanvas);
 }
 
-let defaultOpacity = 1;
+function resizeCanvas() {
+  input.addEventListener("input", () => {
+    value.textContent = `${input.value} x ${input.value}`;
+    clearCanvas();
+    setupCanvas(input.value);
+  })
+  drawPixel(colorPicker.value);
+}
 
-function drawRainbow() {
-  const pixels = document.querySelectorAll(".pixel");
-  pixels.forEach((pixel) => {
-    pixel.addEventListener("mouseover", (e) => {
-      let randomRed = random(256);
-      let randomGreen = random(256);
-      let randomBlue = random(256);
-      currentColor = `rgb(${randomRed}, ${randomGreen}, ${randomBlue})`;
-      e.target.style.opacity = 1;
-      e.target.style.backgroundColor = currentColor;
-    })
+function getRandomColor(...range) {
+  let min, max;
+  if (range.length === 2) {
+    min = range[0];
+    max = range[1];
+  } else if (range.length === 1) {
+    if (range[0] > 0) {
+      min = 0;
+      max = range[0];
+    } else if (range[0] <= 0) {
+      let c = Math.round(Math.random() * 255);
+      return `rgb(${c}, ${c}, ${c})`
+    }
+  } else if (!(range.length === 2)) {
+    return `rgb(255, 255, 255)`;
+  }
+  let r = Math.round(Math.random() * (max - min)) + min;
+  let g = Math.round(Math.random() * (max - min)) + min;
+  let b = Math.round(Math.random() * (max - min)) + min;
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function drawPixel(color) {
+  grid.addEventListener("mouseover", (e) => {
+    e.target.style.backgroundColor = color;
   })
 }
 
-function erase() {
-  const pixels = document.querySelectorAll(".pixel");
-  pixels.forEach((pixel) => {
-    pixel.addEventListener("mouseover", (e) => {
-      currentColor = "#fff";
-      e.target.style.backgroundColor = currentColor;
-    })
+colorPicker.onclick = () => {
+  colorPicker.addEventListener("change", () => {
+    currentColor = colorPicker.value;
+    drawPixel(currentColor);
   })
 }
 
-const eraseBtn = document.querySelector("#white");
-eraseBtn.addEventListener("click", () => {
-  erase();
-});
+eraseBtn.onclick = () => {
+  currentColor = "#fff";
+  drawPixel(currentColor);
+}
+
+rainbowBtn.onclick = () => {
+  grid.addEventListener("mouseover", (e) => {
+    e.target.style.backgroundColor = getRandomColor(0, 255);
+  })
+}
+
+clearBtn.onclick = () => {
+  // const pixels = document.querySelectorAll(".pixel");
+  // pixels.forEach((pixel) => {
+  //   pixel.style.backgroundColor = "#fff";
+  // })
+
+  clearCanvas();
+  setupCanvas(input.value);
+}
+
+grayscaleBtn.onclick = () => {
+  // grid.addEventListener("mouseover", (e) => {
+  //   e.target.style.backgroundColor = getRandomColor(0);
+  // })
+
+  drawGrayscale();
+}
+
+function drawGrayscale() {
+  const pixels = document.querySelectorAll(".pixel");
+  pixels.forEach((pixel) => {
+    let opacity = 0.1;
+    pixel.addEventListener("mouseover", () => {
+      pixel.style.opacity = opacity;
+      opacity += 0.1;
+    });
+  })
+}
+
+let isDarkTheme = true;
+
+const toggleTheme = document.querySelector("#theme");
+toggleTheme.onclick = () => {
+  setTheme();
+}
+
+function setTheme() {
+  if (isDarkTheme) {
+    themeBtn.classList.toggle("dark");
+    isDarkTheme = false;
+  } else if (isDarkTheme === false) {
+    themeBtn.classList.toggle("dark");
+  }
+}
