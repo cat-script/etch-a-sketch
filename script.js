@@ -107,7 +107,6 @@ function rainbowMode() {
 function shadingMode() {
   const pixels = document.querySelectorAll(".pixel");
   if (!isShading) {
-    shadingBtn.style.background = "radial-gradient(rgb(0, 0, 0) 0%, rgb(255, 255, 255) 100%)";
     pixels.forEach((pixel) => {
       let opacity = 0.1;
       pixel.addEventListener("mouseover", () => {
@@ -118,13 +117,13 @@ function shadingMode() {
     });
   }
   if (isShading) {
-    shadingBtn.style.background = "";
     pixels.forEach((pixel) => {
       pixel.addEventListener("mouseover", () => {
         pixel.style.opacity = 1;
       });
     });
   }
+  shadingBtn.classList.toggle("indicator");
   isShading = !isShading;
 }
 

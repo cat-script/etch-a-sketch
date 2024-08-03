@@ -88,6 +88,10 @@ output {
 }
 
 #shadingBtn {
+  background: radial-gradient(rgb(0, 0, 0) 0%, rgb(255, 255, 255) 100%);
+}
+
+#shadingBtn.indicator {
   background: #1f1f1f;
 }
 
