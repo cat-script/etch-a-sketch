@@ -97,6 +97,7 @@ function shadingMode() {
   pixels.forEach((pixel) => {
     let opacity = 0.1;
     pixel.addEventListener("mouseover", () => {
+      pixel.style.backgroundColor = "#fff";
       pixel.style.opacity = opacity;
       opacity += 0.1;
     });
