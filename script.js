@@ -14,6 +14,7 @@ const themeBtn = document.querySelector("#themeBtn");
 let canvasSize = 360;
 let pixelSize = inputSize.value;
 let isGrid = true;
+let isShading = false;
 
 function getRandomColor(...range) {
   let min, max;
@@ -105,14 +106,26 @@ function rainbowMode() {
 
 function shadingMode() {
   const pixels = document.querySelectorAll(".pixel");
-  pixels.forEach((pixel) => {
-    let opacity = 0.1;
-    pixel.addEventListener("mouseover", () => {
-      pixel.style.backgroundColor = "#fff";
-      pixel.style.opacity = opacity;
-      opacity += 0.1;
+  if (!isShading) {
+    shadingBtn.style.background = "radial-gradient(rgb(0, 0, 0) 0%, rgb(255, 255, 255) 100%)";
+    pixels.forEach((pixel) => {
+      let opacity = 0.1;
+      pixel.addEventListener("mouseover", () => {
+        pixel.style.backgroundColor = "#fff";
+        pixel.style.opacity = opacity;
+        opacity += 0.1;
+      });
     });
-  });
+  }
+  if (isShading) {
+    shadingBtn.style.background = "";
+    pixels.forEach((pixel) => {
+      pixel.addEventListener("mouseover", () => {
+        pixel.style.opacity = 1;
+      });
+    });
+  }
+  isShading = !isShading;
 }
 
 function toggleGrid() {
