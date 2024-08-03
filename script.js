@@ -13,6 +13,7 @@ const themeBtn = document.querySelector("#themeBtn");
 
 let canvasSize = 360;
 let pixelSize = inputSize.value;
+let isGrid = true;
 
 function setupCanvas(pixelSize) {
   settings.style.width = canvasSize + "px";
@@ -28,7 +29,7 @@ function setupCanvas(pixelSize) {
     row.classList.add("row");
     for (let j = 0; j < pixelSize; j++) {
       const pixel = document.createElement("div");
-      pixel.classList.add("pixel", "pixel-grid");
+      pixel.classList.add("pixel");
       pixel.style.backgroundColor = "#fff";
       pixel.style.width = canvasSize / pixelSize + "px";
       pixel.style.height = canvasSize / pixelSize + "px";
@@ -119,6 +120,7 @@ function toggleTheme() {
 window.onload = () => {
   setupCanvas(pixelSize);
   resizeCanvas();
+  toggleGrid();
   drawPixel(colorPicker.value);
 }
 
@@ -135,10 +137,16 @@ eraseBtn.onclick = () => {
 clearBtn.onclick = () => {
   clearCanvas();
   setupCanvas(pixelSize);
+  if (isGrid === true) {
+    toggleGrid();
+  }
 }
 
 rainbowBtn.onclick = () => rainbowMode();
 grayscaleBtn.onclick = () => grayscaleMode();
 shadingBtn.onclick = () => shadingMode();
 themeBtn.onclick = () => toggleTheme();
-gridBtn.onclick = () => toggleGrid();
+gridBtn.onclick = () => {
+  toggleGrid();
+  isGrid = !isGrid;
+}
