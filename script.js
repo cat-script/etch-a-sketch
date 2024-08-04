@@ -10,6 +10,8 @@ const outputSize = document.querySelector("#outputSize");
 const inputSize = document.querySelector("#inputSize");
 const gridBtn = document.querySelector("#gridBtn");
 const themeBtn = document.querySelector("#themeBtn");
+const buttons = document.querySelectorAll("button");
+const clickSound = document.querySelector("#clickSound");
 
 let canvasSize = 360;
 let pixelSize = inputSize.value;
@@ -147,6 +149,7 @@ window.onload = () => {
 }
 
 colorPicker.onclick = () => {
+  clickSound.play();
   colorPicker.addEventListener("change", () => {
     coloring(colorPicker.value);
   });
@@ -165,3 +168,10 @@ gridBtn.onclick = () => {
   toggleGrid();
   isGrid = !isGrid;
 }
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  })
+})
